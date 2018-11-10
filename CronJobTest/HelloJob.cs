@@ -10,9 +10,9 @@ namespace CronJobTest
     //[DisallowConcurrentExecution]
     class HelloJob : IJob
     {
-        public async Task Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync($"{DateTime.Now} Hello!");
+             Console.Out.WriteLine($"{DateTime.Now} Hello!");
         }
     }
 }

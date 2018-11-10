@@ -10,16 +10,16 @@ namespace CronJobTest
 {
     public class JobScheduler
     {
-        public static async Task StartAsync()
+        public static void  Start()
         {
 
             StdSchedulerFactory factory = new StdSchedulerFactory();
-            IScheduler scheduler = await factory.GetScheduler();
-            await scheduler.Start();
+            IScheduler scheduler =  factory.GetScheduler();
+             scheduler.Start();
 
             IJobDetail HelloJob = JobBuilder.Create<HelloJob>().Build();
             IJobDetail GoodbyeJob = JobBuilder.Create<GoodByeJob>().StoreDurably().Build();
-            await scheduler.AddJob(GoodbyeJob, false);
+             scheduler.AddJob(GoodbyeJob, false);
 
             ITrigger fiveMinuteTrigger = TriggerBuilder.Create()
             .WithIdentity("fiveMinuteTrigger")
@@ -43,9 +43,9 @@ namespace CronJobTest
             .Build();
 
 
-            await scheduler.ScheduleJob(HelloJob, fiveMinuteTrigger);   
-            await scheduler.ScheduleJob(tenMinuteTrigger);                              
-            await scheduler.ScheduleJob(fifteenMinuteTrigger);
+             scheduler.ScheduleJob(HelloJob, fiveMinuteTrigger);   
+             scheduler.ScheduleJob(tenMinuteTrigger);                              
+             scheduler.ScheduleJob(fifteenMinuteTrigger);
 
         }  
     }
