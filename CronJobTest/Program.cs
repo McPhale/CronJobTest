@@ -8,9 +8,11 @@ namespace CronJobTest
 {
     class Program
     {
-        static void  Main(string[] args)
+        static async Task Main(string[] args)
         {
-             JobScheduler.Start();
+            await Console.Out.WriteLineAsync("Press enter to exit.");
+            await JobScheduler.StartAsync();
+            await Console.In.ReadLineAsync();
         }
     }
 }
