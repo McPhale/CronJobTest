@@ -12,7 +12,7 @@ namespace CronJobTest
     {
         public async Task Execute(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync("Hello!");
+            await Console.Out.WriteLineAsync($"{DateTime.Now} Hello!");
         }
     }
 }
