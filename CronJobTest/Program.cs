@@ -12,6 +12,7 @@ namespace CronJobTest
         {
             await Console.Out.WriteLineAsync("Press enter to exit.");
             await JobScheduler.StartAsync();
+            await SecondaryJobScheduler.StartAsync();
             await Console.In.ReadLineAsync();
         }
     }
