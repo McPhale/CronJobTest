@@ -24,14 +24,7 @@ namespace CronJobTestCore
             {
                 x.Service<JobScheduler>(s =>
                 {
-                    //s.ConstructUsing(name =>
-                    //{
-                    //    var serviceProvider = services.BuildServiceProvider();
-                    //    return serviceProvider.GetService<JobScheduler>();
-                    //});
-
                     s.ConstructUsing(name => serviceProvider.GetService<JobScheduler>());
-                    //s.ConstructUsing(name => new JobScheduler());
                     s.WhenStarted(js => js.Start());
                     s.WhenStopped(js => js.Stop());
                     s.WhenShutdown(js => js.Stop());

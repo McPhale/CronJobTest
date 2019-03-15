@@ -29,7 +29,7 @@
       <Command>
         <![CDATA[
           echo "uninstalling service"
-          $(PublishDir)\CronJobTestCore.exe uninstall
+          psexec \\T1PSBUDAPCDB01 "C:\Program Files\Avis Budget Group\CronJobTestCore\CronJobTestCore.exe" uninstall
         ]]>
       </Command>
     </PropertyGroup>
@@ -41,8 +41,8 @@
       <Command>
         <![CDATA[
           echo "installing service"
-          $(PublishDir)\CronJobTestCore.exe install
-          $(PublishDir)\CronJobTestCore.exe start
+          psexec \\T1PSBUDAPCDB01 "C:\Program Files\Avis Budget Group\CronJobTestCore\CronJobTestCore.exe" install
+          psexec \\T1PSBUDAPCDB01 "C:\Program Files\Avis Budget Group\CronJobTestCore\CronJobTestCore.exe" start
         ]]>
       </Command>
     </PropertyGroup>
