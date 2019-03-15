@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ApplicationIcon />
+    <StartupObject></StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.0" />
+    <PackageReference Include="Quartz" Version="3.0.7" />
+    <PackageReference Include="Topshelf" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Target Name="UninstallService" BeforeTargets="PrepareForPublish">
+    <PropertyGroup>
+      <Command>
+        <![CDATA[
+          echo "uninstalling service"
+          $(PublishDir)\CronJobTestCore.exe uninstall
+        ]]>
+      </Command>
+    </PropertyGroup>
+    <Exec Command="$(Command.Trim())" ContinueOnError="true" />
+  </Target>
+
+  <Target Name="InstallService" AfterTargets="Publish">
+    <PropertyGroup>
+      <Command>
+        <![CDATA[
+          echo "installing service"
+          $(PublishDir)\CronJobTestCore.exe install
+          $(PublishDir)\CronJobTestCore.exe start
+        ]]>
+      </Command>
+    </PropertyGroup>
+    <Exec Command="$(Command.Trim())" ContinueOnError="false" />
+  </Target>
+
+</Project>
