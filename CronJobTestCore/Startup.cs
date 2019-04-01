@@ -9,7 +9,7 @@ namespace CronJobTestCore
 {
     public class Startup
     {
-        IConfigurationRoot AppSettings { get; }
+        IConfiguration AppSettings { get; }
 
         public Startup()
         {
@@ -20,7 +20,7 @@ namespace CronJobTestCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IConfigurationRoot>(AppSettings);
+            services.AddSingleton<IConfiguration>(AppSettings);
             services.AddSingleton<JobScheduler>();
             //services.AddDbContext<Directoryv2Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DirectoryV2"));
         }

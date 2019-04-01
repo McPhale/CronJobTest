@@ -15,12 +15,12 @@ namespace CronJobTest
     {
         private readonly IScheduler scheduler;
         private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IConfigurationRoot _AppSettings;
+        private readonly IConfiguration _AppSettings;
 
         
 
 
-        public JobScheduler(IConfigurationRoot AppSettings)
+        public JobScheduler(IConfiguration AppSettings)
         {
             StdSchedulerFactory factory = new StdSchedulerFactory();
             scheduler = factory.GetScheduler().ConfigureAwait(true).GetAwaiter().GetResult();
