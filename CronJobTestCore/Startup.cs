@@ -1,11 +1,11 @@
-﻿using CronJobTest;
+﻿using CronJobTestCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CronJobTestCore
+namespace CronJobTestCoreCore
 {
     public class Startup
     {
@@ -21,6 +21,7 @@ namespace CronJobTestCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(AppSettings);
+            services.AddHttpClient();
             services.AddSingleton<JobScheduler>();
             //services.AddDbContext<Directoryv2Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DirectoryV2"));
         }

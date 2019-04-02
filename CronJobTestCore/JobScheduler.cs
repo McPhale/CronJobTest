@@ -9,7 +9,7 @@ using NLog;
 using Quartz;
 using Quartz.Impl;
 
-namespace CronJobTest
+namespace CronJobTestCore
 {
     public class JobScheduler 
     {
@@ -63,6 +63,14 @@ namespace CronJobTest
             await scheduler.ScheduleJob(tenMinuteTrigger);
             await scheduler.ScheduleJob(fifteenMinuteTrigger);
 
+             ITrigger runOnceAtStartupTrigger = TriggerBuilder.Create()
+                .WithIdentity("runOnceAtStartupTrigger")
+                .StartNow()
+                .WithSimpleSchedule()
+                .Build();
+
+            IJobDetail testAPIJob = JobBuilder.Create<WeatherJob>().Build();
+            await scheduler.ScheduleJob(testAPIJob, runOnceAtStartupTrigger);
         }
 
         public async void Stop()

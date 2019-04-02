@@ -1,10 +1,10 @@
-﻿using CronJobTest;
+﻿using CronJobTestCore;
 using System;
 using System.Threading.Tasks;
 using Topshelf;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CronJobTestCore
+namespace CronJobTestCoreCore
 {
     static class Program
     {

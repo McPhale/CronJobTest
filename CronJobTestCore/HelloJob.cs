@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 using NLog;
 using Quartz;
 
-namespace CronJobTest
+namespace CronJobTestCore
 {
-    //[DisallowConcurrentExecution]
+    [DisallowConcurrentExecution]
     class HelloJob : IJob
     {
         private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
-            //Console.Out.WriteLine($"{DateTime.Now} Hello!");
+            await Console.Out.WriteLineAsync($"{DateTime.Now} Hello!");
             logger.Info("Hello!");
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
     }
 }
