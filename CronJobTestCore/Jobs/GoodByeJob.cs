@@ -8,15 +8,14 @@ using Quartz;
 
 namespace CronJobTestCore
 {
-    [DisallowConcurrentExecution]
-    class HelloJob : IJob
+    //[DisallowConcurrentExecution]
+    class GoodByeJob : IJob
     {
         private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
-        public async Task Execute(IJobExecutionContext context)
+        public Task Execute(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync($"{DateTime.Now} Hello!");
-            logger.Info("Hello!");
-            //return Task.CompletedTask;
+            logger.Info("Goodbye!");
+            return Task.CompletedTask;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CronJobTestCore;
+using CronJobTestCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -22,6 +23,8 @@ namespace CronJobTestCoreCore
         {
             services.AddSingleton<IConfiguration>(AppSettings);
             services.AddHttpClient();
+            services.UseQuartz(typeof(HelloJob));
+            services.UseQuartz(typeof(GoodByeJob));
             services.AddSingleton<JobScheduler>();
             //services.AddDbContext<Directoryv2Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DirectoryV2"));
         }
