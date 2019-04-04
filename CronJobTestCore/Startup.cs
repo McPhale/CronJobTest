@@ -23,8 +23,7 @@ namespace CronJobTestCoreCore
         {
             services.AddSingleton<IConfiguration>(AppSettings);
             services.AddHttpClient();
-            services.UseQuartz(typeof(HelloJob));
-            services.UseQuartz(typeof(GoodByeJob));
+            services.UseQuartz(typeof(HelloJob), typeof(GoodByeJob), typeof(WeatherJob));
             services.AddSingleton<JobScheduler>();
             //services.AddDbContext<Directoryv2Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DirectoryV2"));
         }

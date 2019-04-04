@@ -11,17 +11,17 @@ namespace CronJobTestCore.Extensions
 {
     static class IServiceCollectionExtensions
     {
+        //Note that anything being DI'd can't be async, since the provider won't know how to materialize it. They may add async providers later idk.
         public static void UseQuartz(this IServiceCollection services, params Type[] jobs)
         {
-            services.AddSingleton<IJobFactory, QuartzJonFactory>();
+            services.AddSingleton<IJobFactory, QuartzJobFactory>();
             services.Add(jobs.Select(jobType => new ServiceDescriptor(jobType, jobType, ServiceLifetime.Singleton)));
 
-            services.AddSingleton(async provider =>
+            services.AddSingleton(provider =>
             {
                 var schedulerFactory = new StdSchedulerFactory();
-                var scheduler = await schedulerFactory.GetScheduler();
+                var scheduler = schedulerFactory.GetScheduler().Result;
                 scheduler.JobFactory = provider.GetService<IJobFactory>();
-                await scheduler.Start();
                 return scheduler;
             });
         }

@@ -2,11 +2,11 @@
 using Quartz.Spi;
 using System;
 
-public class QuartzJonFactory : IJobFactory
+public class QuartzJobFactory : IJobFactory
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public QuartzJonFactory(IServiceProvider serviceProvider)
+    public QuartzJobFactory(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }

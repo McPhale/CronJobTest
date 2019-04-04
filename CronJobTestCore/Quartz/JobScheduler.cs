@@ -15,34 +15,40 @@ namespace CronJobTestCore
 {
     public class JobScheduler 
     {
-        private IScheduler scheduler;
+        private readonly IScheduler _scheduler;
         private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IConfiguration _AppSettings;
 
         
 
 
-        public JobScheduler(IConfiguration AppSettings)
+        public JobScheduler(IConfiguration AppSettings, IScheduler scheduler)
         {
+
             _AppSettings = AppSettings;
+            _scheduler = scheduler;
         }
 
         public async void Start()
         {
-            StdSchedulerFactory factory = new StdSchedulerFactory();
-            scheduler = await factory.GetScheduler();
-
             logger.Info("Starting scheduler." + _AppSettings.GetValue<string>("TestString"));
-            await scheduler.Start();
-            await QuartzServicesUtilities.StartJobAsync<HelloJob>(scheduler, "0 0/5 * 1/1 * ? *");
-            await QuartzServicesUtilities.StartJobAsync<GoodByeJob>(scheduler, "0 0/10 * 1/1 * ? *");
-            await QuartzServicesUtilities.StartJobAsync<GoodByeJob>(scheduler, "0 0/15 * 1/1 * ? *");
+            await _scheduler.Start();
+            await QuartzServicesUtilities.StartJobAsync<HelloJob>(_scheduler, "0 0/5 * 1/1 * ? *");
+            await QuartzServicesUtilities.StartJobAsync<GoodByeJob>(_scheduler, "0 0/10 * 1/1 * ? *");
+            await QuartzServicesUtilities.StartJobAsync<GoodByeJob>(_scheduler, "0 0/15 * 1/1 * ? *");
+
+            ITrigger runOnceAtStartupTrigger = TriggerBuilder.Create()
+           .WithIdentity("runOnceAtStartupTrigger")
+           .StartNow()
+           .WithSimpleSchedule()
+           .Build();
+            await QuartzServicesUtilities.StartJobAsync<WeatherJob>(_scheduler, runOnceAtStartupTrigger);
         }
 
         public async void Stop()
         {
             logger.Info("Shutting down scheduler.");
-            await scheduler.Shutdown();
+            await _scheduler.Shutdown();
         }
     }
 }
