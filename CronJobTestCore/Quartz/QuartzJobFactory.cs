@@ -25,5 +25,6 @@ public class QuartzJonFactory : IJobFactory
         if (disposable != null)
         {
             disposable.Dispose();
-        }}
+        }
+    }
 }
