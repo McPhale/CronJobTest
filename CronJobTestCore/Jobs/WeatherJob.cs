@@ -10,24 +10,22 @@ using Quartz;
 namespace CronJobTestCore
 {
     [DisallowConcurrentExecution]
-    class WeatherJob : IJob
+    class JsonTodoJob : IJob
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly JsonPlaceholderClient _jsonPlaceholderClient;
         private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
 
 
-        public WeatherJob(IHttpClientFactory httpClientFactory)
+        public JsonTodoJob(JsonPlaceholderClient jsonPlaceholderClient)
         {
-            _httpClientFactory = httpClientFactory;
+            _jsonPlaceholderClient = jsonPlaceholderClient;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
             //use this for http client factory
             //https://jsonplaceholder.typicode.com/todos/1
-            var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync("https://jsonplaceholder.typicode.com/todos/1");
-            //await Console.Out.WriteLineAsync(result.ToString());
+            var result = await _jsonPlaceholderClient.GetTodo(1);
             logger.Info(result.ToString());
         }
     }

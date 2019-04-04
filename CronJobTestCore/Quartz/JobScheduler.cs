@@ -42,7 +42,7 @@ namespace CronJobTestCore
            .StartNow()
            .WithSimpleSchedule()
            .Build();
-            await QuartzServicesUtilities.StartJobAsync<WeatherJob>(_scheduler, runOnceAtStartupTrigger);
+            await QuartzServicesUtilities.StartJobAsync<JsonTodoJob>(_scheduler, new TimeSpan(0,0,15));
         }
 
         public async void Stop()
