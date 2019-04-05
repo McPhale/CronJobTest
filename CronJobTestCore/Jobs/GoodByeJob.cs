@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NLog;
 using Quartz;
+using Microsoft.Extensions.Logging;
 
 namespace CronJobTestCore
 {
     //[DisallowConcurrentExecution]
     class GoodByeJob : IJob
     {
-        private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<GoodByeJob> _logger;
+        public GoodByeJob( ILogger<GoodByeJob> logger)
+        {
+            _logger = logger;
+        }
+
         public Task Execute(IJobExecutionContext context)
         {
-            logger.Info("Goodbye!");
+            _logger.LogInformation("Goodbye!");
             return Task.CompletedTask;
         }
     }

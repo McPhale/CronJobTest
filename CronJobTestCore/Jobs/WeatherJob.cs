@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using NLog;
 using Quartz;
+using Microsoft.Extensions.Logging;
 
 namespace CronJobTestCore
 {
@@ -13,12 +13,12 @@ namespace CronJobTestCore
     class JsonTodoJob : IJob
     {
         private readonly JsonPlaceholderClient _jsonPlaceholderClient;
-        private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<JsonTodoJob> _logger;
 
-
-        public JsonTodoJob(JsonPlaceholderClient jsonPlaceholderClient)
+        public JsonTodoJob(JsonPlaceholderClient jsonPlaceholderClient, ILogger<JsonTodoJob> logger)
         {
             _jsonPlaceholderClient = jsonPlaceholderClient;
+            _logger = logger;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -26,7 +26,7 @@ namespace CronJobTestCore
             //use this for http client factory
             //https://jsonplaceholder.typicode.com/todos/1
             var result = await _jsonPlaceholderClient.GetTodo(1);
-            logger.Info(result.ToString());
+            _logger.LogInformation(result.ToString());
         }
     }
 }

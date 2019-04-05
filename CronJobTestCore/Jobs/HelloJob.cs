@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NLog;
+using Microsoft.Extensions.Logging;
 using Quartz;
 
 namespace CronJobTestCore
@@ -11,10 +11,15 @@ namespace CronJobTestCore
     [DisallowConcurrentExecution]
     class HelloJob : IJob
     {
-        private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<GoodByeJob> _logger;
+        public HelloJob( ILogger<GoodByeJob> logger)
+        {
+            _logger = logger;
+        }
+
         public Task Execute(IJobExecutionContext context)
         {
-            logger.Info("Hello!");
+            _logger.LogInformation("Hello!");
             return Task.CompletedTask;
         }
     }

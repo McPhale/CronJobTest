@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NLog.Extensions.Logging;
 
 namespace CronJobTestCoreCore
 {
@@ -24,8 +25,9 @@ namespace CronJobTestCoreCore
             services.AddSingleton<IConfiguration>(AppSettings);
             services.AddHttpClient<JsonPlaceholderClient>();
             services.UseQuartz(typeof(HelloJob), typeof(GoodByeJob), typeof(JsonTodoJob));
+            services.AddLogging(options => options.AddNLog(new NLogProviderOptions { CaptureMessageProperties = true, CaptureMessageTemplates = true }));
+            //services.AddLogging(options => options.AddNLog());
             services.AddSingleton<JobScheduler>();
-            //services.AddDbContext<Directoryv2Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DirectoryV2"));
         }
     }
 }
